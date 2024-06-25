@@ -4,9 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import md5 from 'md5';
 import Cookies from 'universal-cookie';
+import { getAuth } from '../Service/auth';
 
 const baseUrl = "http://localhost:3001/usuarios";
 const cookies = new Cookies();
+
+
 
 class Login extends Component {
 
@@ -26,30 +29,36 @@ class Login extends Component {
         });
     }
 
+
+     iniciar = async () =>{
+        try {
+        const { username, password } = this.state.form; 
+        console.log(username,password);
+        const respuesta = await getAuth(username,password)
+        console.log(respuesta);
+
+        if(respuesta===null || respuesta === undefined){
+            throw new Error("resultados no validos")
+        }
+        console.log(respuesta);
+        return respuesta
+     
+
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     iniciarSesion = async () => {
-        const { username, password } = this.state.form;
-        const encryptedPassword = md5(password);
+        const res = await this.iniciar();
+        console.log(res);
+        cookies.set('username', res.username, { path: "/" });
+        cookies.set('nombre', res.nombre, { path: "/" });
+        cookies.set('dinero', res.dinero, { path: "/" });
+        cookies.set('userId', res.userId, { path: "/" });
+        window.location.href = "./menu";
 
-        await axios.get(baseUrl)
-            .then(response => {
-                console.log('Respuesta del servidor:', response.data);
-
-                const user = response.data.find(user => user.username === username && user.password === encryptedPassword);
-                if (user) {
-                    cookies.set('username', user.username, { path: "/" });
-                    cookies.set('nombre', user.nombre, { path: "/" });
-                    cookies.set('dinero', user.dinero, { path: "/" });
-                    cookies.set('userId', user.userId, { path: "/" });
-                    
-                    alert(`Bienvenido ${user.nombre}`);
-                    window.location.href = "./menu";
-                } else {
-                    alert('El usuario o la contraseña no son correctas');
-                }
-            })
-            .catch(error => {
-                console.error('Error al obtener usuarios:', error);
-            });
+                
     }
 
     componentDidMount() {
