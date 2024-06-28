@@ -1,26 +1,26 @@
-export async function getAuth(username, password) {
-    const baseUrl = "http://localhost:3001/usuarios";
+export async function getAuth(loginData) {
+    const baseUrl = "http://localhost:8081/api/users/auth";
+console.log(loginData);
     try {
-      const respuesta = await fetch(baseUrl);
+      const respuesta = await fetch(baseUrl,{
+        method: "POST",
+        body: JSON.stringify(loginData),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      });
       if (!respuesta.ok) {
+        console.log(respuesta);
         throw new Error('Network response was not ok');
       }
   
-      const authData = await respuesta.json();
+      const user = await respuesta.json();
+      if(!user){
+      throw new Error("No existe")
+      }
+
   
-      const authenticatedUser = authData.find((item) => {
-        console.log(password, item.password);
-        if (item.username === username && item.password === password) {
-          console.log("correcto");
-          alert("Bienvenido " + item.nombre);
-          return true;
-        }
-        return false;
-      });
-  
-      return authenticatedUser || false;
+      return user
     } catch (error) {
-      alert("error de fetch");
+      alert("No existe");
       console.error('Fetch error:', error);
       return false;
     }

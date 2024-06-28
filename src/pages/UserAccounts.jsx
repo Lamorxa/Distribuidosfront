@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/Accounts.css'
+
 const UserAccounts = ({accounts}) => {
   
   if (!accounts) {
@@ -8,9 +8,8 @@ const UserAccounts = ({accounts}) => {
   }
   console.log(accounts);
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">MIS CUENTAS</h2>
-      <table className="table table-striped">
+    <div className="container">
+      <table className="table table-striped ">
         <thead>
           <tr>
             <th scope="col">Bank ID</th>
@@ -20,10 +19,10 @@ const UserAccounts = ({accounts}) => {
         </thead>
         <tbody className='accounts-container'>
           {accounts.map((account, index) => (
-            <tr key={index}>
+            <tr key={index} className={account.balance<=0?"table-danger":""}>
               <td>{account.bankId}</td>
               <td>{account.uuid}</td>
-              <td>{account.balance}</td>
+              <td>S/. {Number.parseFloat(account.balance).toFixed(2)} </td>
             </tr>
           ))}
         </tbody>
