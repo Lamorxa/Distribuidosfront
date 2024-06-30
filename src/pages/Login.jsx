@@ -40,7 +40,7 @@ export default function Login() {
     console.log(res);
     if (res) {
       cookies.set("username", res.username, { path: "/" });
-      cookies.set("nombre", res.nombre, { path: "/" });
+      cookies.set("nombre", res.name, { path: "/" });
       cookies.set("userId", res.userId, { path: "/" });
       window.location.href = "./menu";
     }
