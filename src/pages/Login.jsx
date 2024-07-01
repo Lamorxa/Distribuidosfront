@@ -46,6 +46,7 @@ export default function Login() {
     }
   };
 
+ 
   return (
     <div className="containerPrincipal">
       <div className="containerSecundario">
@@ -62,6 +63,7 @@ export default function Login() {
             onChange={handleChange}
           />
           <br />
+          
           <label>Password</label>
           <br />
           <input
