@@ -1,8 +1,10 @@
-version: '3.4'
+version: '3.8'
 
 services:
   distribuidosfront:
-    image: distribuidosfront
     build:
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
+    ports:
+      - "9090:80"
+
