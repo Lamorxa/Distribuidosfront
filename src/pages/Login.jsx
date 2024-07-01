@@ -46,18 +46,12 @@ export default function Login() {
     }
   };
 
+ 
   return (
     <div className="containerPrincipal">
       <div className="containerSecundario">
         <div className="form-group">
-          <label>Seleccione un banco:</label>
-          <br />
-          <select name="banco" value={form.banco} onChange={handleChange}>
-            <option value="">Seleccione un banco</option>
-            <option value="Banco A">Banco A</option>
-            <option value="Banco B">Banco B</option>
-            <option value="Banco C">Banco C</option>
-          </select>
+          <label>BANCO A</label>
           <br />
           <label>DNI del usuario</label>
           <br />
@@ -69,6 +63,7 @@ export default function Login() {
             onChange={handleChange}
           />
           <br />
+          
           <label>Password</label>
           <br />
           <input
